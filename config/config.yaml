@@ -1,0 +1,4 @@
+AMQP_URI: 'amqp://guest:guest@127.0.0.1:5672//'
+WEB_SERVER_ADDRESS: '0.0.0.0:9000'
+SERVICES:
+  chatops_slack_service: true
