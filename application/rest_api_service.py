@@ -1,4 +1,6 @@
 import json
+
+import nameko
 import yaml
 
 from nameko.web.handlers import http
@@ -17,14 +19,26 @@ class APIServer:
 
     @http('POST,GET', '/<string:backend_svc>/<string:backend_svc_rpc_method>')
     def http_proxy(self, request, backend_svc, backend_svc_rpc_method):
-        request_data = json.loads(request.get_data(as_text=True))
-        bsrm = getattr(getattr(self, backend_svc),
-                       backend_svc_rpc_method)
-        response = bsrm(**request_data)
-        if type(response) is list or type(response) is dict:
-            return json.dumps(response)
-        else:
-            return response
+        try:
+            request_data = json.loads(request.get_data(as_text=True))
+            try:
+                bsvc = getattr(self, backend_svc)
+                try:
+                    bsrm = getattr(bsvc, backend_svc_rpc_method)
+                    try:
+                        response = bsrm(**request_data)
+                        if type(response) is list or type(response) is dict:
+                            return json.dumps(response)
+                        else:
+                            return response
+                    except nameko.exceptions.IncorrectSignature:
+                        return "argument is wrong, please check."
+                except nameko.exceptions.MethodNotFound:
+                    return "No backend method: " + backend_svc_rpc_method
+            except AttributeError:
+                return "No backend service: " + backend_svc
+        except json.decoder.JSONDecodeError:
+            return "If no argument, please use {}"
 
     @http('GET,PUT,POST,DELETE', '/echo')
     def echo(self, request):
