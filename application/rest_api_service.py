@@ -32,13 +32,13 @@ class APIServer:
                         else:
                             return response
                     except nameko.exceptions.IncorrectSignature:
-                        return "argument is wrong, please check."
+                        return "ERROR: argument is wrong, please check."
                 except nameko.exceptions.MethodNotFound:
-                    return "No backend method: " + backend_svc_rpc_method
+                    return "ERROR: No backend method " + backend_svc_rpc_method
             except AttributeError:
-                return "No backend service: " + backend_svc
+                return "ERROR: No backend service " + backend_svc
         except json.decoder.JSONDecodeError:
-            return "If no argument, please use {}"
+            return "ERROR: If no argument, please use {}"
 
     @http('GET,PUT,POST,DELETE', '/echo')
     def echo(self, request):
