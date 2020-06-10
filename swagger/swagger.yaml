@@ -1,0 +1,89 @@
+swagger: "2.0"
+info:
+  description: "For OAP2 restful api server"
+  version: "1.0.0"
+  title: "OAP2 Restful API"
+host: "oap2.daimler.com"
+basePath: "/v2"
+tags:
+  - name: "sansec_service"
+    description: "sansec service"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /sansec_service/encrypt_data:
+    post:
+      tags:
+        - "encrypt_data"
+      summary: "Encrypt plain data"
+      description: ""
+      operationId: "encryptData"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "cert_content"
+          description: "encrypt data need sansec client cert"
+          required: true
+        - in: "body"
+          name: "encrypted_datakey"
+          description: "encrypt data need sansec encrypted_datakey"
+          required: true
+        - in: "body"
+          name: "plain_data"
+          description: "plain data to be encrypted"
+          required: true
+      responses:
+        "405":
+          description: "Invalid input"
+  /sansec_service/decrypt_data:
+    post:
+      tags:
+        - "encrypt_data"
+      summary: "Decrypt encrypted data"
+      description: ""
+      operationId: "decryptData"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "cert_content"
+          description: "encrypt data need sansec client cert"
+          required: true
+        - in: "body"
+          name: "encrypted_datakey"
+          description: "encrypt data need sansec encrypted_datakey"
+          required: true
+        - in: "body"
+          name: "encrypted_data"
+          description: "encrypted data to be decrypted"
+          required: true
+      responses:
+        "405":
+          description: "Invalid input"
+  /cert_service/query_cert:
+    post:
+      tags:
+        - "query_cert"
+      summary: "query cert"
+      description: ""
+      operationId: "queryCert"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      responses:
+        "405":
+          description: "Invalid input"

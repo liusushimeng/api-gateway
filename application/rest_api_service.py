@@ -1,21 +1,31 @@
-from nameko.web.handlers import http
-from nameko.dependency_providers import Config
-from application.service_proxy import IntegratedService
-from nameko.rpc import rpc, RpcProxy
-
 import json
+import yaml
+
+from nameko.web.handlers import http
+from nameko.rpc import rpc, RpcProxy
 
 
 class APIServer:
     name = "rest_api_service"
-    config = Config()
-    print(config)
-    for k,v in config.items():
-        print(k,v)
-    #chatops_proxy = RpcProxy('chatops_slack_service')
-    
+
+    yaml2dict = yaml.load(open('config/config.yaml').read(),
+                          Loader=yaml.FullLoader)
+    backend_services = yaml2dict.get('SERVICES')
+    for k, v in backend_services.items():
+        if v:
+            exec('{} = RpcProxy("{}")'.format(k, k))
+
+    @http('POST,GET', '/<string:backend_svc>/<string:backend_svc_rpc_method>')
+    def http_proxy(self, request, backend_svc, backend_svc_rpc_method):
+        request_data = json.loads(request.get_data(as_text=True))
+        bsrm = getattr(getattr(self, backend_svc),
+                       backend_svc_rpc_method)
+        response = bsrm(**request_data)
+        if type(response) is list or type(response) is dict:
+            return json.dumps(response)
+        else:
+            return response
+
     @http('GET,PUT,POST,DELETE', '/echo')
     def echo(self, request):
-        
-        #chatops_proxy.send_message("#operation",JIRA_ID="IAC-11343",JIRA_LINK="https://itsc-jira.daimler.com/jira/browse/IAC-11343",JIRA_SUMMARY="OAP2_Dev_APP_Cloud9_Deployment",ChangeType="CFN",ChangeWindow="Now",Requester="Ruoran",ChangeDetails=r"```line1cell1       line1cell2line2cell1\\nline2cell2```",ValueApproved="approve",ValueDenied="deny")
         return request.method
