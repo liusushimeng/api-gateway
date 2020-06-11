@@ -3,6 +3,5 @@ WEB_SERVER_ADDRESS: '0.0.0.0:9000'
 SERVICES:
   sansec_service: true
   cert_service: true
-  trusted-advisor: true
-  messenger-service: true
-
+  trustadvisor_service: true
+  messenger_service: true
