@@ -18,10 +18,11 @@ class APIServer:
     for k, v in backend_services.items():
         if v:
             exec('{} = RpcProxy("{}")'.format(k, k))
-
+    
     @http('POST,GET', '/<string:backend_svc>/<string:backend_svc_rpc_method>')
     @requires_auth
     def http_proxy(self, request, backend_svc, backend_svc_rpc_method):
+        print(dir(self))
         try:
             request_data = json.loads(request.get_data(as_text=True))
             try:

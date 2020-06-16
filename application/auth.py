@@ -20,7 +20,7 @@ def requires_auth(f):
         _authz_payload = {
             "principal": _request_payload['sub'],
             # drn:partition:region:projectId:serviceType:service:instance::actions
-            "resource": "drn:aws:cn-north-1:oap2:api:"+str(backend_svc)+":"+str(backend_svc_rpc_method)+"::*",
+            "resource": "drn:aws:cn-north-1:oap:oap:"+str(backend_svc)+":"+str(backend_svc_rpc_method)+"::*",
         }
         print(_authz_payload)
         _authz_headers = {
