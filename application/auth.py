@@ -19,7 +19,8 @@ def requires_auth(f):
         _authz_url = self.config.get('AUTHZ_URL')
         _authz_payload = {
             "principal": _request_payload['sub'],
-            "resource": "drn:aws:cn-north-1:oap2:"+str(backend_svc_rpc_method)+":*:*::"+str(backend_svc_rpc_method),
+            # drn:partition:region:projectId:serviceType:service:instance::actions
+            "resource": "drn:aws:cn-north-1:oap2:api:"+str(backend_svc)+":"+str(backend_svc_rpc_method)+"::*",
         }
         print(_authz_payload)
         _authz_headers = {
