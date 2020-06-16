@@ -5,3 +5,5 @@ SERVICES:
   cert_service: true
   trustadvisor_service: true
   messenger_service: true
+AUTHZ_URL: 'https://ittz-platform-uat.cn.bg.corpintra.net/api/auth/authz'
+AUTHZ_SECRET: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7Y1q5X7uzzn06zExtf3FBuVzb/VqEtvVG2j/7RSgVs+iAQH0/Qc3sE86VihvX+SwwCo2CcsisseNMGpuGxVh7w=='

@@ -5,11 +5,13 @@ import yaml
 
 from nameko.web.handlers import http
 from nameko.rpc import rpc, RpcProxy
-
+from nameko.dependency_providers import Config
+from application.auth import requires_auth
 
 class APIServer:
     name = "rest_api_service"
-
+    
+    config = Config()
     yaml2dict = yaml.load(open('config/config.yaml').read(),
                           Loader=yaml.FullLoader)
     backend_services = yaml2dict.get('SERVICES')
@@ -18,6 +20,7 @@ class APIServer:
             exec('{} = RpcProxy("{}")'.format(k, k))
 
     @http('POST,GET', '/<string:backend_svc>/<string:backend_svc_rpc_method>')
+    @requires_auth
     def http_proxy(self, request, backend_svc, backend_svc_rpc_method):
         try:
             request_data = json.loads(request.get_data(as_text=True))
@@ -39,7 +42,3 @@ class APIServer:
                 return "ERROR: No backend service " + backend_svc
         except json.decoder.JSONDecodeError:
             return "ERROR: If no argument, please use {}"
-
-    @http('GET,PUT,POST,DELETE', '/echo')
-    def echo(self, request):
-        return request.method
