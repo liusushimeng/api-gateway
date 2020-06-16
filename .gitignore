@@ -1,0 +1,15 @@
+.installed.cfg
+dsl-parser-service.iml
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+*.pyo
+*.pyc
+artifact/**
+.idea
+
