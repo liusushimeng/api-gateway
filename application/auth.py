@@ -15,6 +15,7 @@ def requires_auth(f):
         _authz_secret = '-----BEGIN PUBLIC KEY-----\n'+self.config.get('AUTHZ_SECRET')+'\n-----END PUBLIC KEY-----'
         _authz_jwt_algorithms = self.config.get('AUTHZ_ALGORITHMS',['ES256'])
         _request_encoded_jwt = request.headers.get('Authorization').split('Bearer ')[-1]
+        print(_authz_secret)
         _request_payload = jwt.decode(_request_encoded_jwt, _authz_secret, algorithms=_authz_jwt_algorithms)
         _authz_url = self.config.get('AUTHZ_URL')
         _authz_payload = {
