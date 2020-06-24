@@ -2,10 +2,6 @@ FROM artifact-registry.mercedes-benz.com.cn/baselibrary/python:3.6-alpine
 
 ADD . /app
 WORKDIR /app
-USER root
-
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
-RUN apk add openssl-dev gcc libffi-dev musl-dev
 USER 1000
 
 RUN pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ --user
