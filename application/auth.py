@@ -6,7 +6,7 @@ import json
 from werkzeug.wrappers import Response
 
 
-def auth_failed(self, request, backend_svc, backend_svc_rpc_method):
+def auth_failed(self, request, backend_svc, backend_svc_method):
     response = Response("ITTZ Rocks!")
     response.status = '401 Unauthorized'
     return response
