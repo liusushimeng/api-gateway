@@ -53,6 +53,15 @@ docker run -d --hostname amqp_local --name amqp_local -p 15672:15672 -p 5672:567
 pip install -r requirements.txt
 ```
 
+* Get bearer token for authorization
+```
+https://ittz-tech-platform.cn.svc.corpintra.net/api/auth/login
+```
+* Add IAM policy to corresponding user
+``` 
+{"actions":"post,get","resource":"aws:cn-north-1:oap:oap:sansec-service:decrypt_data","condition":"true","effect":true}
+``` 
+
 ### Installation
 
 1. Clone the repo
