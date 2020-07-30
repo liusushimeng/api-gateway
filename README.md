@@ -52,7 +52,6 @@ docker run -d --hostname amqp_local --name amqp_local -p 15672:15672 -p 5672:567
 ```
 pip install -r requirements.txt
 ```
-
 * Get bearer token for authorization
 ```
 https://ittz-tech-platform.cn.svc.corpintra.net/api/auth/login
