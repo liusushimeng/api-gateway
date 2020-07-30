@@ -1,5 +1,5 @@
-# Cert
-Cert service is one-stop and full life cycle ssl/tls certificate management system for hybrid cloud (AWS, Azure, Ali, DataCenter, etc.)
+# Rest-API
+Rest-API service is reverse proxy for http request from frontend and forward it to backend http or rpc api.
 
 
 <!-- TABLE OF CONTENTS -->
@@ -20,21 +20,18 @@ Cert service is one-stop and full life cycle ssl/tls certificate management syst
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Cert service which is one-stop and full life cycle ssl/tls certificate management system for hybrid cloud can upload certificate to database, and then deploy it to differenet target which you want.
+Rest-API service is reverse proxy for http request from frontend and forward it to backend http or rpc api if have corresponding permession.
 
-With Cert:
-* Certificate management
-* Domain management
-* Certificate scan
-* PrivateKey management
-* Target management
-* Target operation management
-* Target adapter layer
+With Rest-API:
+* HTTP Proxy
+* RPC proxy
+* Authorization
 
 ### Built With
 * [Nameko](https://github.com/nameko/nameko)
 * [RabbitMQ](https://www.rabbitmq.com/)
-* [pyOpenSSL](https://pypi.org/project/pyOpenSSL/)
+* [PyJwt](https://pypi.python.org/pypi/PyJwt)
+* [cryptography](https://pypi.python.org/pypi/cryptography)
 
 
 
@@ -51,7 +48,7 @@ pip install nameko
 ```
 docker run -d --hostname amqp_local --name amqp_local -p 15672:15672 -p 5672:5672 --restart=always rabbitmq:3-management
 ```
-* pyOpenSSL
+* PyJwt and cryptography
 ```
 pip install -r requirements.txt
 ```
@@ -60,47 +57,28 @@ pip install -r requirements.txt
 
 1. Clone the repo
 ```
-git clone https://code-management.mercedes-benz.com.cn/oap2/cert-service.git
+git clone https://code-management.mercedes-benz.com.cn/oap2/rest-api-service.git
 ```
 2. Start the service
 ```
-cd cert-service
+cd rest-api-service
 bash bin/Entrypoint.sh 
 ```
-3. Test functions in your service or nameko shell cli
+3. Test functions in your service or postman
 ```
-nameko shell
+postman
 ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-In nameko shell
+In Postman
 ```python
-n.rpc.cert_service.verify_cert(
-			cert_body = open('tests/dsd-cn.i.daimler.com.crt').read(),
-			cert_pk = open('tests/dsd-cn.i.daimler.com.key').read()
-			)
+for http proxy
+URL: http://oap2.cn.bg.corpintra.net/api/h/<devops-service-name>/<path>
 ...
-n.rpc.cert_service.verify_cert_chain(
-			cert_body = open('tests/dsd-cn.i.daimler.com.crt').read(),
-			trusted_cas = [open('tests/QuoVadis_Root_CA_2_G3.crt').read()]
-			)
-...
-n.rpc.cert_service.parse_cert(
-            cert_body = open('tests/dsd-cn.i.daimler.com.crt').read()
-            )
-...
-n.rpc.cert_service.upload_cert(
-			project = 'OABDOS',
-			stage = 'Prod',
-			platform = 'AWS',
-			owner_mails = 'mengyun.tian@daimler.com',
-			admin_mails = 'wei.f.wang@daimler.com,ruoran.li@daimler.com',
-			cert_body = open('tests/dsd-cn.i.daimler.com.crt').read(),
-			cert_pk = open('tests/dsd-cn.i.daimler.com.key').read(),
-			cert_chain = open('tests/QuoVadis_Global_SSL_ICA_G3.crt').read(),
-			cert_rootca = open('tests/QuoVadis_Root_CA_2_G3.crt').read()
-			)
+for rpc proxy
+http://oap2.cn.bg.corpintra.net/api/r/<backend_service>/<backend_service_rpc_method>
+
 ```
 
 
