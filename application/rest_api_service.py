@@ -5,7 +5,7 @@ import yaml
 import requests
 
 from nameko.web.handlers import http
-from nameko.rpc import rpc, RpcProxy
+from nameko.rpc import RpcProxy  # noqa W0611
 from nameko.dependency_providers import Config
 from application.auth import requires_auth
 

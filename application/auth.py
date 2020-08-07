@@ -20,13 +20,13 @@ def requires_auth(f):
                           64)) + '\n-----END PUBLIC KEY-----'
         _authz_jwt_algorithms = self.config.get('AUTHZ_ALGORITHMS', ['ES256'])
         _request_encoded_jwt = \
-        request.headers.get('Authorization').split('Bearer ')[-1]
+            request.headers.get('Authorization').split('Bearer ')[-1]
         _request_payload = jwt.decode(_request_encoded_jwt, _authz_secret,
                                       algorithms=_authz_jwt_algorithms)
         _authz_url = self.config.get('AUTHZ_URL')
         _authz_payload = {
             "principal": _request_payload['sub'],
-            # drn:partition:region:projectId:serviceType:service:instance::actions
+            # drn:partition:region:projectId:svcType:svc:instance::actions
             "resource": "drn:aws:cn-north-1:oap:oap:" + str(
                 backend_svc) + ":" + str(backend_svc_method) + "::" + str(
                 request.method),
@@ -38,7 +38,7 @@ def requires_auth(f):
         resp = requests.post(_authz_url, data=json.dumps(_authz_payload),
                              verify=False, headers=_authz_headers)
         print(resp.json()['data'])
-        if resp.json()['data'] != True:
+        if resp.json()['data'] is not True:
             return auth_failed(self, request, backend_svc,
                                backend_svc_method)
         return f(self, request, backend_svc, backend_svc_method)
