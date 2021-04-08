@@ -2,3 +2,5 @@ nameko==2.12.0
 PyJwt==1.7.1
 dnspython==1.16.0
 cryptography==2.9.2
+nameko-http==0.1.7
+dnspython==1.16.0

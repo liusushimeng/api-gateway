@@ -35,6 +35,7 @@ def requires_auth(f):
         _authz_headers = {
             "Content-Type": "application/json"
         }
+
         resp = requests.post(_authz_url, data=json.dumps(_authz_payload),
                              verify=False, headers=_authz_headers)
         print(resp.json()['data'])

@@ -5,6 +5,7 @@ import yaml
 import requests
 
 from nameko.web.handlers import http
+from nameko_http import api
 from nameko.rpc import RpcProxy  # noqa W0611
 from nameko.dependency_providers import Config
 from application.auth import requires_auth
@@ -21,8 +22,9 @@ class APIServer:
         if v:
             exec('{} = RpcProxy("{}")'.format(k, k))
 
-    @http('POST,GET', '/r/<string:backend_svc>/<string:backend_svc_method>')
-    @requires_auth
+    @api('POST,GET', '/r/<string:backend_svc>/<string:backend_svc_method>',
+         cors_enabled=True)
+    # @requires_auth
     def http2rpc(self, request, backend_svc, backend_svc_method):
         try:
             request_data = json.loads(request.get_data(as_text=True))
@@ -46,7 +48,7 @@ class APIServer:
             return "ERROR: If no argument, please use {}"
 
     @http('POST,GET', '/h/<string:backend_svc>/<string:backend_svc_method>')
-    @requires_auth
+    # @requires_auth
     def http2http(self, request, backend_svc, backend_svc_method):
         request_url = "http://" + backend_svc + "/" + backend_svc_method
         request_method = request.method.lower()
