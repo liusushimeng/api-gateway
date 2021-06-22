@@ -155,4 +155,4 @@ Contributions are what make the open source community such an amazing place to b
 
 Wei Wang  359703299@qq.com
 
-Project Link: [rest-api-service](https://github.com/liusushimeng/api-gateway.git)
+Project Link: [api-gateway](https://github.com/liusushimeng/api-gateway.git)
