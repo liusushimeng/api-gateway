@@ -1,5 +1,5 @@
-# Rest-API
-Rest-API service is reverse proxy for http request from frontend and forward it to backend http or rpc api.
+# Api-Gateway
+Api-Gateway service is reverse proxy for http request from frontend and forward it to backend http or rpc api.
 
 
 <!-- TABLE OF CONTENTS -->
@@ -20,7 +20,7 @@ Rest-API service is reverse proxy for http request from frontend and forward it 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Rest-API service is reverse proxy for http request from frontend and forward it to backend http or rpc api if have corresponding permession.
+Api-Gateway service is reverse proxy for http request from frontend and forward it to backend http or rpc api if have corresponding permession.
 
 With Rest-API:
 * HTTP Proxy
@@ -65,11 +65,11 @@ https://ittz-tech-platform.cn.svc.corpintra.net/api/auth/login
 
 1. Clone the repo
 ```
-git clone https://code-management.mercedes-benz.com.cn/oap2/rest-api-service.git
+git clone https://github.com/liusushimeng/api-gateway.git
 ```
 2. Start the service
 ```
-cd rest-api-service
+cd api-gateway
 bash bin/Entrypoint.sh 
 ```
 3. Test functions in your service or postman
@@ -153,6 +153,6 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact
 
-ITT/Z Cloud Team - ittz-cloud@daimler.com
+Wei Wang  359703299@qq.com
 
-Project Link: [rest-api-service](https://code-management.mercedes-benz.com.cn/oap2/rest-api-service.git)
+Project Link: [rest-api-service](https://github.com/liusushimeng/api-gateway.git)
